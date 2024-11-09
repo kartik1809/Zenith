@@ -32,13 +32,15 @@ import {
   MoodTracker,
 } from '../components/Dashboard';
 
-import { COLORS, generateEvents, fakeData } from '../utils/FakeData.js';
+import { COLORS, generateEvents, AnalyticsData } from '../utils/AnalyticsData.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserData } from '../redux/userSlice';
 
 const Dashboard = () => {
   const [timeRange, setTimeRange] = useState('week');
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
-    ...fakeData,
+    ...AnalyticsData,
     moodData: [],
     topApps: [],
   });
@@ -60,10 +62,10 @@ const Dashboard = () => {
     }));
 
   useEffect(() => {
-    setIsLoading(true);
+
 
     setTimeout(() => {
-      const historicalData = fakeData.getHistoricalData(timeRange);
+      const historicalData = AnalyticsData.getHistoricalData(timeRange);
 
       setData((prevData) => ({
         ...prevData,
@@ -71,20 +73,95 @@ const Dashboard = () => {
         productivityScore: generateRandomScore(80, 100),
         wellbeingScore: generateRandomScore(70, 90),
         contentConsumptionScore: generateRandomScore(60, 90),
-        websiteUsage: generateWebsiteUsage(fakeData.websiteUsage),
+        websiteUsage: generateWebsiteUsage(AnalyticsData.websiteUsage),
         moodData: historicalData,
-        topApps: generateTopApps(fakeData.topApps),
+        topApps: generateTopApps(AnalyticsData.topApps),
       }));
 
-      setIsLoading(false);
+
     }, 1000);
   }, [timeRange]);
+
+  const userData = useSelector((state) => state.user.userData);
+  const dispatch = useDispatch();
+  console.log('User data:', userData);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchAnalytics = async () => {
+      const userAnalytics = JSON.parse(localStorage.getItem('userAnalytics'));
+
+      if (userAnalytics && Date.now() - userAnalytics.timestamp < 1000 * 60 * 30) {
+        console.log('User analytics:', userAnalytics);
+        dispatch(setUserData(userAnalytics));
+      } else {
+        try {
+          const response = await fetch('https://resolute-land-440916-q3.el.r.appspot.com/analytics/getanalytics', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ uuid: 'd54f5e6a-7472-4053-bd1e-3d14e59c2431' }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to fetch analytics');
+          }
+          const data = await response.json();
+          localStorage.setItem('userAnalytics', JSON.stringify({ ...data, timestamp: Date.now() }));
+          console.log('Fetched analytics:', data);
+          dispatch(setUserData(data));
+        } catch (error) {
+          console.error('Error fetching analytics:', error);
+        }
+      }
+
+    };
+
+    fetchAnalytics();
+    setIsLoading(false)
+  }, []);
+
+  const transformData = (dayWiseScores) => {
+    const today = new Date();
+
+    return dayWiseScores
+      .filter(day => day.focusScore !== null)
+      .map((day, index) => {
+        const date = new Date(today);
+        date.setDate(today.getDate() - (3 - index));
+
+        const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+        return {
+          date: formattedDate,
+          productivity: Math.round(day.productivityScore),
+          focus: Math.round(day.focusScore),
+          contentConsumption: Math.round(day.contentScore),
+          mood: Math.round(day.moodScore)
+        };
+      });
+  };
+
+  const convertCategoryData = (categoryData) => {
+    const maxValue = Math.max(...Object.values(categoryData));
+  
+    return Object.entries(categoryData)
+      .filter(([category, value]) => value !== 0 && value !== null) 
+      .map(([category, value]) => ({
+        category,
+        value: (value / maxValue) * 2.4
+      }));
+  };
+  
+
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  return (
+
+  return !isLoading && (
     <div className='flex min-h-screen'>
       <Sidebar selectedNav={'Dashboard'} />
 
@@ -94,37 +171,38 @@ const Dashboard = () => {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6'>
           <MetricCard
             title='Focus Score'
-            value={data.focusScore}
+            value={(userData.result && userData.result.overallScores.focusScore || 0).toFixed(2)}
             icon='🎯'
             color='text-blue-400'
             change={3}
           />
           <MetricCard
             title='Productivity'
-            value={data.productivityScore}
+            value={(userData.result && userData.result.overallScores.productivityScore || 0).toFixed(2)}
             icon='📈'
             color='text-green-400'
             change={-2}
           />
           <MetricCard
             title='Wellbeing'
-            value={data.wellbeingScore}
+            value={(userData.result && userData.result.overallScores.wellbeingScore || 0).toFixed(2)}
             icon='🌿'
             color='text-yellow-400'
             change={5}
           />
           <MetricCard
             title='Content Consumption'
-            value={data.contentConsumptionScore}
+            value={(userData.result && userData.result.overallScores.contentScore || 0).toFixed(2)}
             icon='📚'
             color='text-purple-400'
             change={-1}
           />
         </div>
+
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
           <ChartCard title='Productivity Trend'>
             <ResponsiveContainer width='100%' height={200}>
-              <AreaChart data={data.moodData}>
+              <AreaChart data={transformData(userData.result?.dayWiseScores || [])}>
                 <CartesianGrid strokeDasharray='3 3' stroke='#2a3a5a' />
                 <XAxis dataKey='date' stroke='#8884d8' />
                 <YAxis stroke='#8884d8' />
@@ -148,19 +226,20 @@ const Dashboard = () => {
           </ChartCard>
           <ChartCard title='Content Consumption'>
             <ResponsiveContainer width='100%' height={200}>
-              <BarChart data={fakeData.contentConsumption} layout='vertical'>
+              <BarChart data={convertCategoryData(userData.result?.categoryData || {})} layout='vertical'>
                 <CartesianGrid strokeDasharray='3 3' stroke='#2a3a5a' />
                 <XAxis type='number' stroke='#8884d8' />
                 <YAxis dataKey='category' type='category' stroke='#8884d8' />
                 <Tooltip contentStyle={{ backgroundColor: '#1a2035', border: 'none' }} />
                 <Bar dataKey='value'>
-                  {fakeData.contentConsumption.map((_, index) => (
+                  {convertCategoryData(userData.result?.categoryData || {}).map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
+
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6'>
           <ChartCard title='Wellbeing Factors'>
@@ -199,7 +278,7 @@ const Dashboard = () => {
           </ChartCard>
           <ChartCard title='Creativity Factors'>
             <ResponsiveContainer width='100%' height={200}>
-              <RadarChart data={fakeData.creativity}>
+              <RadarChart data={AnalyticsData.creativity}>
                 <PolarGrid stroke='#2a3a5a' />
                 <PolarAngleAxis dataKey='subject' stroke='#AF52DE' />
                 <PolarRadiusAxis angle={30} domain={[0, 10]} stroke='#AF52DE' />
@@ -216,34 +295,13 @@ const Dashboard = () => {
           </ChartCard>
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
-          <ChartCard title='Website Usage'>
-            <ResponsiveContainer width='100%' height={250}>
-              <PieChart>
-                <Pie
-                  data={data.websiteUsage}
-                  dataKey='value'
-                  nameKey='name'
-                  cx='50%'
-                  cy='50%'
-                  outerRadius={80}
-                  label
-                >
-                  {data.websiteUsage.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#1a2035', border: 'none' }} />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </ChartCard>
           <TopApps apps={data.topApps || []} timeRange={timeRange} />
+          <MoodTracker moodData={data.moodData || []} />
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6'>
-          <MoodTracker moodData={data.moodData || []} />
+        <CalendarView events={events} />
           <WeeklySummary data={data} />
         </div>
-        <CalendarView events={events} />
       </div>
     </div>
   );

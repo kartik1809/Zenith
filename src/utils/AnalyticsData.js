@@ -39,7 +39,7 @@ export const totalTimeofApps = (apps = []) => {
   return apps.reduce((total, app) => total + app.time, 0);
 };
 
-export const fakeData = {
+export const AnalyticsData = {
   name: 'John Doe',
   streak: 7,
   avatar: './avatar.svg',
@@ -214,7 +214,7 @@ export const generateAIInsights = () => {
   ];
 };
 
-export const ProfilefakeData = {
+export const ProfileAnalyticsData = {
   user: {
     name: 'Kartik Pokhriyal',
     role: 'Senior Developer',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { totalTimeofApps } from '../../utils/FakeData';
+import { totalTimeofApps } from '../../utils/AnalyticsData';
 const formatTimeinHrsMin = (seconds) => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);

@@ -10,7 +10,7 @@ import {
   Cell,
 } from 'recharts';
 import ChartCard from './ChartCard';
-import { COLORS } from '../../utils/FakeData.js';
+import { COLORS } from '../../utils/AnalyticsData.js';
 
 const MoodTracker = ({ moodData = [] }) => (
   <ChartCard title='Mood Tracker'>

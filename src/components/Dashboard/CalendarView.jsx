@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const CalendarView = ({ events }) => (
   <motion.div
-    className='bg-white bg-opacity-10 backdrop-blur-md p-6 mt-5 rounded-2xl'
+    className='bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl'
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.5 }}

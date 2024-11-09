@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { generateZenithData, generateZenithInsights } from '../../utils/FakeData';
+import { generateZenithData, generateZenithInsights } from '../../utils/AnalyticsData';
 export const useZenithData = () => {
   const [zenithData, setZenithData] = useState([]);
   const [zenithInsights, setZenithInsights] = useState([]);

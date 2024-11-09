@@ -7,10 +7,10 @@ import { PerformanceOverview } from '../components/Profile/PerformanceOverview';
 import { EarnedBadges } from '../components/Profile/EarnedBadges.jsx';
 import { ProductivityInsights } from '../components/Profile/ProductivityInsights.jsx';
 import { Recommendations } from '../components/Profile/Recommendations.jsx';
-import { ProfilefakeData } from '../utils/FakeData';
+import { ProfileAnalyticsData } from '../utils/AnalyticsData.js';
 
 export default function Profile() {
-  const { user, userComparison, badges, productivityInsights, recommendations } = ProfilefakeData;
+  const { user, userComparison, badges, productivityInsights, recommendations } = ProfileAnalyticsData;
 
   const handleLogout = () => {
     // Implement logout functionality

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { generateMentalData, generateAIInsights } from '../../utils/FakeData';
+import { generateMentalData, generateAIInsights } from '../../utils/AnalyticsData';
 
 const useMentalHealthData = () => {
   const [mentalHealthData, setMentalHealthData] = useState([]);

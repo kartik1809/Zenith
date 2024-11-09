@@ -9,7 +9,7 @@ const WeeklySummary = ({ data }) => (
     transition={{ duration: 0.5 }}
   >
     <h2 className='text-xl font-semibold mb-4 text-gray-300'>Weekly Summary</h2>
-    <div className='grid grid-cols-2 gap-4'>
+    <div className='grid grid-cols-2 gap-4 mt-10'>
       <div className='p-4 bg-white bg-opacity-5 rounded-lg'>
         <h3 className='text-sm text-gray-400'>Most Productive Day</h3>
         <p className='text-lg font-medium text-white'>Wednesday</p>
