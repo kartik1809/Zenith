@@ -1,4 +1,5 @@
 import { format, subDays, startOfWeek, addDays } from 'date-fns';
+import { Code, Bug, Users, Lightbulb, FileText } from 'lucide-react';
 
 export const COLORS = ['#007AFF', '#34C759', '#FF9500', '#FF2D55', '#AF52DE', '#5856D6'];
 
@@ -211,4 +212,66 @@ export const generateAIInsights = () => {
     "Your sentiment has been mostly positive lately. Reflect on what's going well in your life.",
     'Try to maintain a consistent daily routine to support your mental health.',
   ];
+};
+
+export const ProfilefakeData = {
+  user: {
+    name: 'Kartik Pokhriyal',
+    role: 'Senior Developer',
+    email: 'kartik.pokhriyal@zenith.com',
+    location: 'New Delhi, India',
+    joinDate: 'October 2023',
+    team: 'Zenith Innovators',
+    skills: ['Full Stack', 'AI Enthusiast'],
+  },
+  userComparison: {
+    productivityScore: 85,
+    averageProductivityScore: 72,
+    websitesVisited: 32,
+    averageWebsitesVisited: 25,
+    timeSpent: 480,
+    averageTimeSpent: 420,
+  },
+  badges: [
+    {
+      name: 'Code Maestro',
+      description: 'Completed 100 coding challenges on Zenith',
+      icon: Code,
+      color: 'from-purple-500 to-indigo-600',
+    },
+    {
+      name: 'Bug Buster',
+      description: 'Fixed 50 critical bugs in Zenith projects',
+      icon: Bug,
+      color: 'from-green-500 to-emerald-600',
+    },
+    {
+      name: 'Collaboration Champion',
+      description: 'Participated in 20 team projects on Zenith',
+      icon: Users,
+      color: 'from-blue-500 to-cyan-600',
+    },
+    {
+      name: 'Innovation Igniter',
+      description: 'Proposed 10 innovative features for Zenith',
+      icon: Lightbulb,
+      color: 'from-yellow-500 to-amber-600',
+    },
+    {
+      name: 'Documentation Dynamo',
+      description: 'Contributed 1000 lines to Zenith documentation',
+      icon: FileText,
+      color: 'from-red-500 to-pink-600',
+    },
+  ],
+  productivityInsights: {
+    mostProductiveDay: 'Wednesday',
+    peakPerformanceTime: '10:00 AM - 12:00 PM',
+    workLifeBalanceScore: '8.5/10',
+  },
+  recommendations: [
+    'Consider taking more breaks during long coding sessions',
+    'Explore new Zenith features to boost your productivity',
+    'Collaborate more with team members on challenging projects',
+  ],
 };
