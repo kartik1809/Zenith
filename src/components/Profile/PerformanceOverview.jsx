@@ -10,7 +10,7 @@ const PerformanceItem = ({ label, value, average, unit }) => (
         {value} {unit}
       </span>
     </div>
-    <Progress value={(value / average) * 100} className='w-full' />
+    <Progress value={((value - average) / average) * 100} className='w-full' />
     <p className='text-xs text-gray-400 mt-1'>
       {Math.abs(value - average)} {unit} {value > average ? 'above' : 'below'} average
     </p>

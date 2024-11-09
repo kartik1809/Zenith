@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Sidebar } from '../components/shared';
 import { ProfileHeader } from '../components/Profile/ProfileHeader.jsx';
 import { ProfileInfo } from '../components/Profile/ProfileInfo.jsx';
-import { PerformanceOverview } from '../components/Profile/PerformanceOverview.jsx';
+import { PerformanceOverview } from '../components/Profile/PerformanceOverview';
 import { EarnedBadges } from '../components/Profile/EarnedBadges.jsx';
 import { ProductivityInsights } from '../components/Profile/ProductivityInsights.jsx';
 import { Recommendations } from '../components/Profile/Recommendations.jsx';
