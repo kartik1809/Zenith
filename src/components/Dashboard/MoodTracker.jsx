@@ -12,6 +12,7 @@ import {
 import ChartCard from './ChartCard';
 import { COLORS } from '../../utils/AnalyticsData.js';
 
+
 const MoodTracker = ({ moodData = [] }) => (
   <ChartCard title='Mood Tracker'>
     <ResponsiveContainer width='100%' height={200}>

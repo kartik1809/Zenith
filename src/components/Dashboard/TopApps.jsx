@@ -23,7 +23,7 @@ const TopApps = ({ apps = [], timeRange }) => (
               <div className='flex justify-between items-center mb-1'>
                 <span className='font-medium text-gray-300'>{app.name}</span>
                 <span className='text-sm text-gray-400'>
-                  {formatTimeinHrsMin(app.time)} ({app.category})
+                  {formatTimeinHrsMin(app.time)}
                   <span className={app.change >= 0 ? 'text-green-400 ml-2' : 'text-red-400 ml-2'}>
                     {app.change >= 0 ? '↑' : '↓'} {Math.abs(app.change)}%
                   </span>

@@ -12,19 +12,19 @@ const WeeklySummary = ({ data }) => (
     <div className='grid grid-cols-2 gap-4 mt-10'>
       <div className='p-4 bg-white bg-opacity-5 rounded-lg'>
         <h3 className='text-sm text-gray-400'>Most Productive Day</h3>
-        <p className='text-lg font-medium text-white'>Wednesday</p>
+        <p className='text-lg font-medium text-white'>Saturday</p>
       </div>
       <div className='p-4 bg-white bg-opacity-5  rounded-lg'>
         <h3 className='text-sm text-gray-400'>Focus Time</h3>
-        <p className='text-lg font-medium text-white'>32h 45m</p>
+        <p className='text-lg font-medium text-white'>4h 45m</p>
       </div>
       <div className='p-4 bg-white bg-opacity-5 rounded-lg'>
         <h3 className='text-sm text-gray-400'>Tasks Completed</h3>
-        <p className='text-lg font-medium text-white'>24</p>
+        <p className='text-lg font-medium text-white'>7</p>
       </div>
       <div className='p-4 bg-white bg-opacity-5 rounded-lg'>
         <h3 className='text-sm text-gray-400'>Avg. Focus Score</h3>
-        <p className='text-lg font-medium text-white'>8.5</p>
+        <p className='text-lg font-medium text-white'>84</p>
       </div>
     </div>
   </motion.div>

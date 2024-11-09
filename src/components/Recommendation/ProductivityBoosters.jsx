@@ -33,7 +33,7 @@ export const ProductivityBoosters = ({ zenithInsights, setSelectedInsight }) => 
                 {insight.text}
               </p>
               <div className='flex space-x-2 mt-2'>
-                <ZenithBadge color={insight.impact == 'Medium' ? 'yellow' : 'red'}>
+                <ZenithBadge color={insight.impact == 'Medium' ? '#d97706' : ' #e11d48'}>
                   {insight.impact} Impact
                 </ZenithBadge>
                 <ZenithBadge>{insight.category}</ZenithBadge>

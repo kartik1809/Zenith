@@ -46,41 +46,7 @@ const Dashboard = () => {
   });
   const [events] = useState(generateEvents());
 
-  const generateRandomScore = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-  const generateWebsiteUsage = (websites) =>
-    websites.map((site) => ({
-      ...site,
-      value: generateRandomScore(5000, 15000),
-    }));
-
-  const generateTopApps = (apps) =>
-    apps.map((app) => ({
-      ...app,
-      time: generateRandomScore(1000, 6000),
-      change: generateRandomScore(-10, 10),
-    }));
-
-  useEffect(() => {
-
-
-    setTimeout(() => {
-      const historicalData = AnalyticsData.getHistoricalData(timeRange);
-
-      setData((prevData) => ({
-        ...prevData,
-        focusScore: generateRandomScore(80, 100),
-        productivityScore: generateRandomScore(80, 100),
-        wellbeingScore: generateRandomScore(70, 90),
-        contentConsumptionScore: generateRandomScore(60, 90),
-        websiteUsage: generateWebsiteUsage(AnalyticsData.websiteUsage),
-        moodData: historicalData,
-        topApps: generateTopApps(AnalyticsData.topApps),
-      }));
-
-
-    }, 1000);
-  }, [timeRange]);
 
   const userData = useSelector((state) => state.user.userData);
   const dispatch = useDispatch();
@@ -154,7 +120,22 @@ const Dashboard = () => {
       }));
   };
   
-
+  function getTopVisitedDomains(visitedDomains) {
+    if (!visitedDomains || typeof visitedDomains !== 'object') {
+      return [];
+    }
+  
+    return Object.entries(visitedDomains)
+      .sort((a, b) => b[1].seconds - a[1].seconds)
+      .slice(0, 4)
+      .map(([name, { seconds }]) => ({
+        name,
+        time: seconds,
+        change: Math.floor(Math.random() * 10) - 5
+      }));
+  }
+  
+  console.log('Mood data:', data.moodData);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -295,8 +276,8 @@ const Dashboard = () => {
           </ChartCard>
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
-          <TopApps apps={data.topApps || []} timeRange={timeRange} />
-          <MoodTracker moodData={data.moodData || []} />
+          <TopApps apps={getTopVisitedDomains(userData.result?.visitedDomains) || []} timeRange={timeRange} />
+          <MoodTracker moodData={transformData(userData.result?.dayWiseScores || [])} />
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6'>
         <CalendarView events={events} />
