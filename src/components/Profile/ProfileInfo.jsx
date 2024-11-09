@@ -9,7 +9,7 @@ export const ProfileInfo = ({ user }) => (
       <CardTitle>Profile Information</CardTitle>
     </CardHeader>
     <CardContent>
-      <div className='flex items-center space-x-4 mb-4'>
+      <div className='flex items-center space-x-4 mb-8'>
         <div className='w-24 h-24 rounded-full bg-gray-600 flex items-center justify-center text-3xl'>
           {user.name
             .split(' ')
@@ -27,26 +27,19 @@ export const ProfileInfo = ({ user }) => (
             ))}
           </div>
         </div>
-        <Button variant='secondary' size='icon' className='ml-auto'>
-          <Camera className='w-4 h-4' />
-        </Button>
       </div>
-      <div className='grid grid-cols-2 gap-4'>
+      <div className='flex justify-evenly'>
         <div className='flex items-center space-x-2'>
           <User className='w-4 h-4' />
           <span>{user.email}</span>
-        </div>
-        <div className='flex items-center space-x-2'>
-          <MapPin className='w-4 h-4' />
-          <span>{user.location}</span>
         </div>
         <div className='flex items-center space-x-2'>
           <Calendar className='w-4 h-4' />
           <span>Joined {user.joinDate}</span>
         </div>
         <div className='flex items-center space-x-2'>
-          <Users className='w-4 h-4' />
-          <span>Team: {user.team}</span>
+          <MapPin className='w-4 h-4' />
+          <span>{user.location}</span>
         </div>
       </div>
     </CardContent>
