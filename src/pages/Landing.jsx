@@ -18,7 +18,7 @@ import './LandingPage.css';
 //     }
 //   });
 
-//   return <Stars ref={starsRef} radius={50} count={1000} factor={3} fade />;
+//   return <Stars ref={starsRef} radius={50} count={10000} factor={5} fade />;
 // }
 
 function LandingPage() {
