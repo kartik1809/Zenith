@@ -1,5 +1,16 @@
 import { format, subDays, startOfWeek, addDays } from 'date-fns';
-import { Code, Bug, Users, Lightbulb, FileText } from 'lucide-react';
+import {
+  Target,
+  CheckCircle,
+  Calendar,
+  Award,
+  Trophy,
+  Clock,
+  Coffee,
+  Compass,
+  BookOpen,
+  Bolt,
+} from 'lucide-react';
 
 export const COLORS = ['#007AFF', '#34C759', '#FF9500', '#FF2D55', '#AF52DE', '#5856D6'];
 
@@ -234,34 +245,34 @@ export const ProfilefakeData = {
   },
   badges: [
     {
-      name: 'Code Maestro',
-      description: 'Completed 100 coding challenges on Zenith',
-      icon: Code,
-      color: 'from-purple-500 to-indigo-600',
+      name: 'Focus Ninja',
+      description: 'Maintained focus for 4 hours without distractions',
+      icon: Target,
+      color: 'from-purple-400 to-purple-700',
     },
     {
-      name: 'Bug Buster',
-      description: 'Fixed 50 critical bugs in Zenith projects',
-      icon: Bug,
-      color: 'from-green-500 to-emerald-600',
+      name: 'Consistency Champ',
+      description: 'Logged daily productivity for 30 days straight',
+      icon: Calendar,
+      color: 'from-green-400 to-teal-600',
     },
     {
-      name: 'Collaboration Champion',
-      description: 'Participated in 20 team projects on Zenith',
-      icon: Users,
-      color: 'from-blue-500 to-cyan-600',
+      name: 'Time Traveler',
+      description: 'Maintained productivity in both day and night sessions',
+      icon: Clock,
+      color: 'from-pink-500 to-rose-600',
     },
     {
-      name: 'Innovation Igniter',
-      description: 'Proposed 10 innovative features for Zenith',
-      icon: Lightbulb,
-      color: 'from-yellow-500 to-amber-600',
+      name: 'Explorer',
+      description: 'Visited 20 new productive sites',
+      icon: Compass,
+      color: 'from-cyan-500 to-blue-500',
     },
     {
-      name: 'Documentation Dynamo',
-      description: 'Contributed 1000 lines to Zenith documentation',
-      icon: FileText,
-      color: 'from-red-500 to-pink-600',
+      name: 'Reflection Guru',
+      description: 'Reviewed and analyzed productivity weekly for a month',
+      icon: BookOpen,
+      color: 'from-purple-600 to-violet-700',
     },
   ],
   productivityInsights: {

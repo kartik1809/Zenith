@@ -8,8 +8,8 @@ export const ProfileHeader = ({ user, onLogout }) => (
     <div className='flex items-center space-x-4'>
       <Bell className='w-6 h-6 cursor-pointer' />
       <MessageCircle className='w-6 h-6 cursor-pointer' />
-      <Button variant='destructive' size='sm' onClick={onLogout}>
-        <LogOut className='w-4 h-4 mr-2' />
+      <Button variant='destructive' size='sm' onClick={onLogout} className='flex items-center'>
+        <LogOut className='w-5 h-7 mr-2' />
         Logout
       </Button>
     </div>
