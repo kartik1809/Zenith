@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Sidebar } from '../components/shared';
-import { ProfileHeader } from '../components/profile/ProfileHeader.jsx';
-import { ProfileInfo } from '../components/profile/ProfileInfo.jsx';
-import { PerformanceOverview } from '../components/profile/PerformanceOverview.jsx';
-import { EarnedBadges } from '../components/profile/EarnedBadges.jsx';
-import { ProductivityInsights } from '../components/profile/ProductivityInsights.jsx';
-import { Recommendations } from '../components/profile/Recommendations.jsx';
+import { ProfileHeader } from '../components/Profile/ProfileHeader.jsx';
+import { ProfileInfo } from '../components/Profile/ProfileInfo.jsx';
+import { PerformanceOverview } from '../components/Profile/PerformanceOverview.jsx';
+import { EarnedBadges } from '../components/Profile/EarnedBadges.jsx';
+import { ProductivityInsights } from '../components/Profile/ProductivityInsights.jsx';
+import { Recommendations } from '../components/Profile/Recommendations.jsx';
 import { ProfilefakeData } from '../utils/FakeData';
 
 export default function Profile() {
