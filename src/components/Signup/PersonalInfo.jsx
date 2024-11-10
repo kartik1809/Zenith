@@ -6,7 +6,7 @@ const PersonalInfo = ({nextPage,setUserData,userData}) => {
     const handlePage = (e) => {
         e.preventDefault();
         nextPage('3')
-        console.log('Personal Info:');
+        
     }
     const handleBack = (e) => {
         e.preventDefault();

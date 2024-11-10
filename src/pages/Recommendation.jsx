@@ -83,9 +83,7 @@ const Recommendation = () => {
   );
 
   function getHighestScore1(overallScores) {
-    console.log("Overall", overallScores);
     const scores = Object.values(overallScores);
-    console.log("Scores", scores);
     const maxScore = Math.max(...scores.filter(score => score < 100));
     return Math.round(maxScore);
   }

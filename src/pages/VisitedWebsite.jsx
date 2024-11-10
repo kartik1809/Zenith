@@ -3,11 +3,9 @@ import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react';
 import { Sidebar } from '../components/shared';
+import { useSelector } from 'react-redux';
 
 const websiteData = [
-  { name: 'Mon', productivity: 65, time: 120 },
-  { name: 'Tue', productivity: 59, time: 100 },
-  { name: 'Wed', productivity: 80, time: 150 },
   { name: 'Thu', productivity: 81, time: 160 },
   { name: 'Fri', productivity: 56, time: 90 },
   { name: 'Sat', productivity: 55, time: 85 },
@@ -22,13 +20,46 @@ const topWebsites = [
   { name: 'chat.openai.com', time: 120, category: 'AI', change: 15 },
 ];
 
+
+const convertCategoryData = (categoryData) => {
+  const maxValue = Math.max(...Object.values(categoryData));
+
+  return Object.entries(categoryData)
+    .filter(([category, value]) => value !== 0 && value !== null) 
+    .map(([category, value]) => ({
+      category,
+      value: (value / maxValue) * 2.4
+    }));
+};
+
+
+
 const formatTime = (minutes) => {
-  const hours = Math.floor(minutes / 60);
+  const hours = Math.floor(minutes / (60*60));
   const mins = minutes % 60;
   return `${hours}h ${mins}m`;
 };
+function getTopVisitedDomains(visitedDomains) {
+  if (!visitedDomains || typeof visitedDomains !== 'object') {
+    return [];
+  }
+
+  return Object.entries(visitedDomains)
+    .sort((a, b) => b[1].seconds - a[1].seconds)
+    .slice(0, 5)
+    .map(([name, { seconds }]) => ({
+      name,
+      time: seconds,
+      change: Math.floor(Math.random() * 10) - 5
+    }));
+}
+
+
+
 
 const VisitedWebsites = () => {
+  const userData = useSelector((state) => state.user.userData);
+  console.log(getTopVisitedDomains(userData.result?.visitedDomains) || []);
   return (
     <div className='flex min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 text-white'>
       <Sidebar selectedNav='Visited Websites' />
@@ -44,21 +75,22 @@ const VisitedWebsites = () => {
           <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8'>
             <MetricCard
               title='Total Websites'
-              value='76'
+              
+              value={(Object.keys(userData.result?.visitedDomains || {}).length || 0)+''}
               icon='🌐'
               color='text-blue-400'
               change={3}
             />
             <MetricCard
               title='Total Time'
-              value='19h 18m'
+              value={formatTime(userData.result?.allTime || 0)}
               icon='⏱️'
               color='text-green-400'
               change={-2}
             />
             <MetricCard
               title='Productivity Score'
-              value='72%'
+              value={(userData.result?.overallScores.productivityScore || 0).toFixed(2)}
               icon='📈'
               color='text-yellow-400'
               change={5}
@@ -67,7 +99,7 @@ const VisitedWebsites = () => {
 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-8'>
             <WebsiteChart data={websiteData} />
-            <TopWebsites websites={topWebsites} />
+            <TopWebsites websites={getTopVisitedDomains(userData.result?.visitedDomains) || []} />
           </div>
 
           <WebsiteCategories />

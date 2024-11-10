@@ -50,7 +50,7 @@ const Dashboard = () => {
 
   const userData = useSelector((state) => state.user.userData);
   const dispatch = useDispatch();
-  console.log('User data:', userData);
+  
 
   useEffect(() => {
     setIsLoading(true);
@@ -58,7 +58,7 @@ const Dashboard = () => {
       const userAnalytics = JSON.parse(localStorage.getItem('userAnalytics'));
 
       if (userAnalytics && Date.now() - userAnalytics.timestamp < 1000 * 60 * 30) {
-        console.log('User analytics:', userAnalytics);
+        
         dispatch(setUserData(userAnalytics));
       } else {
         try {
@@ -75,7 +75,7 @@ const Dashboard = () => {
           }
           const data = await response.json();
           localStorage.setItem('userAnalytics', JSON.stringify({ ...data, timestamp: Date.now() }));
-          console.log('Fetched analytics:', data);
+          
           dispatch(setUserData(data));
         } catch (error) {
           console.error('Error fetching analytics:', error);
@@ -135,7 +135,7 @@ const Dashboard = () => {
       }));
   }
   
-  console.log('Mood data:', data.moodData);
+  
 
   if (isLoading) {
     return <LoadingSpinner />;

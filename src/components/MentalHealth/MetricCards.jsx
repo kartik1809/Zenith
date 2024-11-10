@@ -23,7 +23,6 @@ const MetricCards = ({ metrics }) => {
   };
 
   const userData = useSelector((state) => state.user.userData);
-  console.log(userData);
 
   return (
     <motion.div

@@ -26,6 +26,27 @@ const MentalHealthPage = () => {
     duration: 0.5,
   };
 
+  
+  const transformData = (dayWiseScores) => {
+    const today = new Date();
+    return dayWiseScores
+      .filter(day => day.focusScore !== null)
+      .map((day, index) => {
+        const date = new Date(today);
+        date.setDate(today.getDate() - (3 - index));
+        const formattedDate = date.toISOString().split('T')[0];
+        return {
+          date: formattedDate,
+          moodScore: Math.round(day.moodScore),
+          sentimentScore: day.sentimentScore,
+          focusTime: Math.round(day.focusScore)
+        };
+      });
+  };
+
+
+  
+
   return (
     <div className='flex min-h-screen'>
       <Sidebar selectedNav={'Mental Health'} />
@@ -56,8 +77,8 @@ const MentalHealthPage = () => {
         <MetricCards metrics={metrics} />
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-8'>
-          <MoodTrend data={mentalHealthData} />
-          <SentimentAnalysis data={mentalHealthData} />
+          <MoodTrend data={transformData(userData.result?.dayWiseScores || [])} />
+          <SentimentAnalysis data={transformData(userData.result?.dayWiseScores || [])} />
         </div>
 
         <div className='grid grid-cols-1 gap-6 mb-8'>
