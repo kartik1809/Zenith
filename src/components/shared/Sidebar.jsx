@@ -35,11 +35,6 @@ const sidebarItems = [
     path: '/report',
   },
   {
-    icon: 'https://img.icons8.com/?size=100&id=364&format=png&color=64748b',
-    label: 'Settings',
-    path: '/settings',
-  },
-  {
     icon: 'https://img.icons8.com/?size=100&id=fUUEbUbXhzOA&format=png&color=64748b',
     label: 'Profile',
     path: '/profile',
@@ -73,7 +68,7 @@ export default function Sidebar({ selectedNav }) {
             Icon={item.icon}
             title={item.label}
             selected={selected}
-            handleNavigation={() => handleNavigation(item.path, item.label)} // Pass the handleNavigation function
+            handleNavigation={() => handleNavigation(item.path, item.label)}
             open={open}
           />
         ))}
@@ -88,7 +83,7 @@ const Option = ({ Icon, title, selected, handleNavigation, open }) => {
   return (
     <motion.button
       layout
-      onClick={handleNavigation} // Use the handleNavigation prop
+      onClick={handleNavigation}
       className={`relative flex h-10 w-full items-center rounded-md transition-colors ${
         selected === title ? 'bg-indigo-100 text-indigo-800' : 'text-slate-200 '
       }`}

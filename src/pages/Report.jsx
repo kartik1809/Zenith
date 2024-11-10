@@ -119,7 +119,7 @@ export default function Report() {
 
   return (
     <div className='flex min-h-screen'>
-      <Sidebar selectedNav={'Report'} />
+      <Sidebar selectedNav={'30 Days Report'} />
       <div className='min-h-screen w-full bg-gradient-to-br from-gray-900 to-blue-900 text-white p-8'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
