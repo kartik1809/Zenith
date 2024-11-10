@@ -51,8 +51,8 @@ export const totalTimeofApps = (apps = []) => {
 };
 
 export const AnalyticsData = {
-  name: 'John Doe',
-  streak: 7,
+  name: 'Kartik Pokhriyal',
+  streak: 1,
   avatar: './avatar.svg',
   totalTime: 36000,
   focusScore: 85,
