@@ -31,15 +31,16 @@ const MentalHealthResources = () => {
       <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
         {[
           { text: 'Meditation Techniques', color: 'blue' },
-          { text: 'Stress Management Tips', color: 'green' },
-          { text: 'Mood Tracking Guide', color: 'yellow' },
+          { text: 'Stress Management Tips', color: 'brown' },
+          { text: 'Mood Tracking Guide', color: 'pink' },
           { text: 'Find a Therapist', color: 'purple' },
-          { text: 'Emergency Helplines', color: 'red' },
+          { text: 'Emergency Helplines', color: 'orange' },
           { text: 'Self-Care Strategies', color: 'indigo' },
         ].map((item, index) => (
           <motion.li
             key={index}
-            className={`cursor-pointer block p-3 bg-${item.color}-600 bg-opacity-50 rounded-lg hover:bg-opacity-80 transition-colors`}
+            className={`cursor-pointer block p-3 bg-opacity-50 rounded-lg hover:bg-opacity-80 transition-colors`}
+            style={{ backgroundColor: `${item.color}` }}
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
