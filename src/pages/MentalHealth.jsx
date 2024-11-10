@@ -9,10 +9,11 @@ import {
 } from '../components/MentalHealth';
 import { Sidebar } from '../components/shared';
 import useMentalHealthData from '../components/hooks/useMentalHealthData.jsx';
+import { useSelector } from 'react-redux';
 
 const MentalHealthPage = () => {
   const { metrics, mentalHealthData, aiInsights } = useMentalHealthData();
-
+  const userData = useSelector((state) => state.user.userData);
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
     in: { opacity: 1, y: 0 },
@@ -28,7 +29,7 @@ const MentalHealthPage = () => {
   return (
     <div className='flex min-h-screen'>
       <Sidebar selectedNav={'Mental Health'} />
-      <div
+      <motion.div
         className='min-h-screen w-full bg-gradient-to-br from-gray-900 to-blue-900 text-white p-8'
         initial='initial'
         animate='in'
@@ -64,7 +65,7 @@ const MentalHealthPage = () => {
         </div>
 
         <MentalHealthResources />
-      </div>
+      </motion.div>
     </div>
   );
 };

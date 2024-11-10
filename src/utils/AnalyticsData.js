@@ -182,7 +182,7 @@ export const generateZenithData = () => {
   const data = [];
   let productivity = 50;
   let focus = 50;
-  for (let i = 7; i >= 0; i--) {
+  for (let i = 3; i >= 0; i--) {
     productivity += Math.random() * 10 - 5;
     focus += Math.random() * 10 - 5;
     productivity = Math.max(0, Math.min(100, productivity));

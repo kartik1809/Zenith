@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import MetricCard from './MetricCard';
+import { useSelector } from 'react-redux';
 
 const MetricCards = ({ metrics }) => {
   const containerVariants = {
@@ -21,6 +22,9 @@ const MetricCards = ({ metrics }) => {
     },
   };
 
+  const userData = useSelector((state) => state.user.userData);
+  console.log(userData);
+
   return (
     <motion.div
       className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6'
@@ -31,7 +35,7 @@ const MetricCards = ({ metrics }) => {
       <motion.div variants={itemVariants}>
         <MetricCard
           title='Mental Health Score'
-          value={metrics.mentalHealthScore}
+          value={((userData.result) ? userData.result.overallScores.wellbeingScore : 0).toFixed(2)}
           icon='🧠'
           color='text-green-400'
           change={3}
@@ -40,7 +44,7 @@ const MetricCards = ({ metrics }) => {
       <motion.div variants={itemVariants}>
         <MetricCard
           title='Average Mood'
-          value={metrics.averageMood}
+          value={((userData.result) ? userData.result.overallScores.moodScore : 0).toFixed(2)}
           icon='😊'
           color='text-yellow-400'
           change={5}
@@ -49,10 +53,10 @@ const MetricCards = ({ metrics }) => {
       <motion.div variants={itemVariants}>
         <MetricCard
           title='Average Sentiment'
-          value={metrics.averageSentiment}
+          value={((userData.result) ? userData.result.overallScores.wellbeingScore/100 : 0).toFixed(2)}
           icon='💖'
           color='text-pink-400'
-          change={2}
+          change={-2}
         />
       </motion.div>
     </motion.div>

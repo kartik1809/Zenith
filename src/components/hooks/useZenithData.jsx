@@ -10,8 +10,8 @@ export const useZenithData = () => {
   useEffect(() => {
     setZenithData(generateZenithData());
     setZenithInsights(generateZenithInsights());
-    setZenScore(Math.floor(Math.random() * 20) + 70); // score between 70-90
-    setGrowthProgress(Math.floor(Math.random() * 30) + 60); // Progress between 60-90%
+    setZenScore(82); // score between 70-90
+    setGrowthProgress(74); // Progress between 60-90%
     setDailyInsight(
       'Great job on maintaining focus yesterday! Your productivity increased by 15%. Keep up the momentum by tackling your most challenging task first thing in the morning.'
     );
