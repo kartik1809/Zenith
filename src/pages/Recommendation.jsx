@@ -15,6 +15,9 @@ import {
 } from '../components/Recommendation';
 
 import { useZenithData } from '../components/hooks/useZenithData';
+import { useSelector } from 'react-redux';
+
+
 
 const Recommendation = () => {
   const [viewMode, setViewMode] = useState('week');
@@ -30,6 +33,29 @@ const Recommendation = () => {
         return direction === 'next' ? addDays(prevDate, 7) : subDays(prevDate, 7);
       }
     });
+  };
+
+  const userData = useSelector((state) => state.user.userData);
+
+  const transformData = (dayWiseScores) => {
+    const today = new Date();
+
+    return dayWiseScores
+      .filter(day => day.focusScore !== null)
+      .map((day, index) => {
+        const date = new Date(today);
+        date.setDate(today.getDate() - (3-index));
+
+        const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+        return {
+          date: formattedDate,
+          productivity: Math.round(day.productivityScore),
+          focus: Math.round(day.focusScore),
+          contentConsumption: Math.round(day.contentScore),
+          mood: Math.round(day.moodScore)
+        };
+      });
   };
 
   const renderDateNavigation = () => (
@@ -56,11 +82,37 @@ const Recommendation = () => {
     </motion.div>
   );
 
+  function getHighestScore1(overallScores) {
+    console.log("Overall", overallScores);
+    const scores = Object.values(overallScores);
+    console.log("Scores", scores);
+    const maxScore = Math.max(...scores.filter(score => score < 100));
+    return Math.round(maxScore);
+  }
+  
+  
+  function getHighestScore(scores) {
+    const { totalScore, ...restScores } = scores;
+    const filteredScores = Object.keys(restScores).filter(key => restScores[key] < 100);
+  
+    if (filteredScores.length === 0) return null;
+    
+    const highestKey = filteredScores.reduce((maxKey, key) => {
+      return restScores[key] > restScores[maxKey] ? key : maxKey;
+    }, filteredScores[0]);
+    
+    return {
+      score: restScores[highestKey],
+      key: highestKey
+    };
+  }
+
+
   return (
     <div className='flex min-h-screen'>
       <Sidebar selectedNav={'Recommendation'} />
 
-      <div className='min-h-screen w-full bg-gradient-to-br from-gray-900 to-blue-900 text-white p-8'>
+      <div className='min-h-screen w-full bg-graScodient-to-br from-gray-900 to-blue-900 text-white p-8'>
         <motion.h1
           className='text-4xl font-bold mb-2'
           initial={{ opacity: 0, y: -20 }}
@@ -109,14 +161,14 @@ const Recommendation = () => {
         {renderDateNavigation()}
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8'>
-          <ProductivityPulse zenithData={zenithData} />
+          <ProductivityPulse zenithData={transformData(userData.result?.dayWiseScores || [])} />
           <ZenScore zenScore={zenScore} />
           <ProductivityBoosters
             zenithInsights={zenithInsights}
             setSelectedInsight={setSelectedInsight}
           />
           <FocusFlow zenithData={zenithData} />
-          <ZenithFocusTimer />
+          <ZenithFocusTimer /> 
           <DailyProTip dailyInsight={dailyInsight} />
           <GrowthJourney growthProgress={growthProgress} />
         </div>

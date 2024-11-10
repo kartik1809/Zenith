@@ -95,7 +95,7 @@ const Dashboard = () => {
       .filter(day => day.focusScore !== null)
       .map((day, index) => {
         const date = new Date(today);
-        date.setDate(today.getDate() - (3 - index));
+        date.setDate(today.getDate() - (3-index));
 
         const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 

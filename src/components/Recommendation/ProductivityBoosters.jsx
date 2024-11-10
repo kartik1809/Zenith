@@ -54,7 +54,6 @@ export const ProductivityBoosters = ({ zenithInsights, setSelectedInsight }) => 
                     : 'bg-blue-500 hover:bg-blue-600'
                 } transition-colors duration-200`}
               >
-                {console.log('Insight ID: ', insight)}
                 {insight.completed ? <CheckCircleIcon size={24} /> : <ChevronRight size={24} />}
               </button>
             </div>
