@@ -33,7 +33,7 @@ const MentalHealthPage = () => {
       .filter(day => day.focusScore !== null)
       .map((day, index) => {
         const date = new Date(today);
-        date.setDate(today.getDate() - (3 - index));
+        date.setDate(today.getDate() - (5 - index));
         const formattedDate = date.toISOString().split('T')[0];
         return {
           date: formattedDate,

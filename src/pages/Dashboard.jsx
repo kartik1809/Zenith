@@ -38,7 +38,7 @@ import { setUserData } from '../redux/userSlice';
 
 const Dashboard = () => {
   const [timeRange, setTimeRange] = useState('week');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({
     ...AnalyticsData,
     moodData: [],
@@ -557,6 +557,7 @@ const Dashboard = () => {
       if (userAnalytics && Date.now() - userAnalytics.timestamp < 1000 * 60 * 30) {
         
         dispatch(setUserData(userAnalytics));
+        setIsLoading(false)
       } else {
         try {
           const response = await fetch('https://resolute-land-440916-q3.el.r.appspot.com/analytics/getanalytics', {
@@ -574,16 +575,18 @@ const Dashboard = () => {
           localStorage.setItem('userAnalytics', JSON.stringify({ ...data, timestamp: Date.now() }));
           
           dispatch(setUserData(data));
+          setIsLoading(false)
         } catch (error) {
           localStorage.setItem('userAnalytics', JSON.stringify({ ...dummyData, timestamp: Date.now() }));
           console.error('Error fetching analytics:', error);
+          setIsLoading(false)
         }
       }
 
     };
 
     fetchAnalytics();
-    setIsLoading(false)
+    
   }, []);
 
   const transformData = (dayWiseScores) => {
@@ -593,7 +596,7 @@ const Dashboard = () => {
       .filter(day => day.focusScore !== null)
       .map((day, index) => {
         const date = new Date(today);
-        date.setDate(today.getDate() - (3-index));
+        date.setDate(today.getDate() - (5-index));
 
         const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
@@ -667,7 +670,7 @@ const Dashboard = () => {
             value={(userData.result && userData.result.overallScores.wellbeingScore || 0).toFixed(2)}
             icon='🌿'
             color='text-yellow-400'
-            change={5}
+            change={-5}
           />
           <MetricCard
             title='Content Consumption'

@@ -37,7 +37,7 @@ const MetricCards = ({ metrics }) => {
           value={((userData.result) ? userData.result.overallScores.wellbeingScore : 0).toFixed(2)}
           icon='🧠'
           color='text-green-400'
-          change={3}
+          change={-5}
         />
       </motion.div>
       <motion.div variants={itemVariants}>
@@ -46,7 +46,7 @@ const MetricCards = ({ metrics }) => {
           value={((userData.result) ? userData.result.overallScores.moodScore : 0).toFixed(2)}
           icon='😊'
           color='text-yellow-400'
-          change={5}
+          change={-5}
         />
       </motion.div>
       <motion.div variants={itemVariants}>

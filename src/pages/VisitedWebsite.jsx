@@ -79,21 +79,20 @@ const VisitedWebsites = () => {
               value={(Object.keys(userData.result?.visitedDomains || {}).length || 0)+''}
               icon='🌐'
               color='text-blue-400'
-              change={3}
+             
             />
             <MetricCard
               title='Total Time'
               value={formatTime(userData.result?.allTime || 0)}
               icon='⏱️'
               color='text-green-400'
-              change={-2}
             />
             <MetricCard
               title='Productivity Score'
               value={(userData.result?.overallScores.productivityScore || 0).toFixed(2)}
               icon='📈'
               color='text-yellow-400'
-              change={5}
+              change={-2}
             />
           </div>
 
