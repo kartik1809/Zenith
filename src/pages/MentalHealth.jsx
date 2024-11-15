@@ -26,11 +26,10 @@ const MentalHealthPage = () => {
     duration: 0.5,
   };
 
-  
   const transformData = (dayWiseScores) => {
     const today = new Date();
     return dayWiseScores
-      .filter(day => day.focusScore !== null)
+      .filter((day) => day.focusScore !== null)
       .map((day, index) => {
         const date = new Date(today);
         date.setDate(today.getDate() - (5 - index));
@@ -39,13 +38,10 @@ const MentalHealthPage = () => {
           date: formattedDate,
           moodScore: Math.round(day.moodScore),
           sentimentScore: day.sentimentScore,
-          focusTime: Math.round(day.focusScore)
+          focusTime: Math.round(day.focusScore),
         };
       });
   };
-
-
-  
 
   return (
     <div className='flex min-h-screen'>

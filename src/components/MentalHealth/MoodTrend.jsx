@@ -41,7 +41,7 @@ const MoodTrend = ({ data }) => {
             dataKey='moodScore'
             stroke='#4CAF50'
             name='Mood Score'
-            strokeWidth={2}
+            strokeWidth={3}
             dot={{ r: 4 }}
           />
         </LineChart>

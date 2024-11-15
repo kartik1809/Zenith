@@ -44,7 +44,7 @@ const SentimentAnalysis = ({ data }) => {
             fillOpacity={1}
             fill='url(#colorSentiment)'
             name='Sentiment Score'
-            dot={{ r: 4 }}
+            dot={false}
           />
         </AreaChart>
       </ResponsiveContainer>
