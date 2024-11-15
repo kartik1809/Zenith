@@ -23,7 +23,8 @@ const Recommendation = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedInsight, setSelectedInsight] = useState(null);
   const { zenithData, zenithInsights, zenScore, dailyInsight, growthProgress } = useZenithData();
-  console.log(contentRecommendations);
+  console.log(zenithData);
+  
   const navigateDate = (direction) => {
     setCurrentDate((prevDate) => {
       if (viewMode === 'day') {
@@ -103,6 +104,8 @@ const Recommendation = () => {
     };
   }
 
+  
+
   return (
     <div className='flex min-h-screen'>
       <Sidebar selectedNav={'Recommendation'} />
@@ -165,7 +168,7 @@ const Recommendation = () => {
             setSelectedInsight={setSelectedInsight}
           />
           <ContentRecommendations recommendations={contentRecommendations} />
-          <FocusFlow zenithData={zenithData} />
+          <FocusFlow zenithData={transformData(userData.result?.dayWiseScores || [])} />
           <GrowthJourney growthProgress={growthProgress} />
         </div>
 
