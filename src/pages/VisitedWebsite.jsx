@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect ,useState} from 'react';
 import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react';
@@ -6,10 +6,10 @@ import { Sidebar } from '../components/shared';
 import { useSelector } from 'react-redux';
 
 const websiteData = [
-  { name: 'Thu', productivity: 81, time: 160 },
-  { name: 'Fri', productivity: 56, time: 90 },
-  { name: 'Sat', productivity: 55, time: 85 },
-  { name: 'Sun', productivity: 40, time: 60 },
+  { name: 'Tue', productivity: 74, time: 160 },
+  { name: 'Wed', productivity: 56, time:105 },
+  { name: 'Thu', productivity: 57, time: 185 },
+  { name: 'Fri', productivity: 74, time: 160 },
 ];
 
 const topWebsites = [
@@ -208,12 +208,44 @@ const TopWebsites = ({ websites }) => (
 );
 
 const WebsiteCategories = () => {
-  const categories = [
+  const [categories, setCategories] = useState([
     { name: 'Work', percentage: 45, color: 'bg-blue-500' },
     { name: 'Learning', percentage: 30, color: 'bg-green-500' },
     { name: 'Entertainment', percentage: 15, color: 'bg-yellow-500' },
     { name: 'Social', percentage: 10, color: 'bg-red-500' },
-  ];
+    { name: 'Education', percentage: 0, color: 'bg-purple-500' },
+    { name: 'Social Media', percentage: 0, color: 'bg-pink-500' },
+    { name: 'News', percentage: 0, color: 'bg-indigo-500' },
+    { name: 'Health and Fitness', percentage: 0, color: 'bg-teal-500' },
+    { name: 'Personal Development', percentage: 0, color: 'bg-orange-500' },
+    { name: 'Others', percentage: 0, color: 'bg-gray-500' },
+    { name: 'Finance', percentage: 0, color: 'bg-brown-500' }
+  ]);
+
+  const userData = useSelector((state) => state.user.userData);
+
+  const calculatePercent = (categoryData) => {
+    const total = Object.values(categoryData).reduce((acc, curr) => acc + curr, 0);
+
+    const percentages = Object.entries(categoryData).reduce((acc, [category, value]) => {
+      acc[category] = (value / total) * 100;
+      return acc;
+    }, {});
+
+    const updatedCategories = categories.map((category) => {
+      if (percentages[category.name]) {
+        return { ...category, percentage: percentages[category.name] };
+      } else {
+        return { ...category, percentage: 0 };
+      }
+    }).filter((category) => category.percentage > 0 && category.percentage >= 1);
+    setCategories(updatedCategories);
+  };
+
+  useEffect(() => {
+    const categoryData = userData.result?.categoryData || {};
+    calculatePercent(categoryData);
+  }, [userData]);
 
   return (
     <motion.div
@@ -241,12 +273,14 @@ const WebsiteCategories = () => {
                 ></div>
               </div>
             </div>
-            <div className='w-12 text-right text-sm'>{category.percentage}%</div>
+            <div className='w-12 text-right text-sm'>{category.percentage.toFixed(2)}%</div>
           </motion.div>
         ))}
       </div>
     </motion.div>
   );
 };
+
+
 
 export default VisitedWebsites;

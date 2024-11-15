@@ -228,7 +228,7 @@ export const generateAIInsights = () => {
 export const ProfileAnalyticsData = {
   user: {
     name: 'Kartik Pokhriyal',
-    role: 'Senior Developer',
+    role: 'Software Developer',
     email: 'kartik.pokhriyal@zenith.com',
     location: 'New Delhi, India',
     joinDate: 'October 2023',
@@ -236,12 +236,12 @@ export const ProfileAnalyticsData = {
     skills: ['Full Stack', 'AI Enthusiast'],
   },
   userComparison: {
-    productivityScore: 85,
+    productivityScore: 68,
     averageProductivityScore: 72,
-    websitesVisited: 32,
-    averageWebsitesVisited: 25,
-    timeSpent: 480,
-    averageTimeSpent: 420,
+    websitesVisited: 135,
+    averageWebsitesVisited: 105,
+    timeSpent: 1320,
+    averageTimeSpent: 1000,
   },
   badges: [
     {
@@ -276,7 +276,7 @@ export const ProfileAnalyticsData = {
     },
   ],
   productivityInsights: {
-    mostProductiveDay: 'Wednesday',
+    mostProductiveDay: 'Tuesday',
     peakPerformanceTime: '10:00 AM - 12:00 PM',
     workLifeBalanceScore: '8.5/10',
   },

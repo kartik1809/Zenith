@@ -11,6 +11,7 @@ import { ProfileAnalyticsData } from '../utils/AnalyticsData.js';
 
 export default function Profile() {
   const { user, userComparison, badges, productivityInsights, recommendations } = ProfileAnalyticsData;
+  const userInfo= JSON.parse(localStorage.getItem('user')) || {Name:'User',avatar:'https://i.pravatar.cc/150?img=68',streak:5}
 
   const handleLogout = () => {
     // Implement logout functionality
@@ -29,7 +30,7 @@ export default function Profile() {
           <ProfileHeader user={user} onLogout={handleLogout} />
 
           <div className='grid grid-cols-1 md:grid-cols-3 gap-8 mb-8'>
-            <ProfileInfo user={user} />
+            <ProfileInfo user={user} userInfo={userInfo} />
             <PerformanceOverview userComparison={userComparison} />
           </div>
 

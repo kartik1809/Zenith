@@ -51,6 +51,10 @@ const Dashboard = () => {
   const userData = useSelector((state) => state.user.userData);
   const dispatch = useDispatch();
   
+
+  const user=JSON.parse(localStorage.getItem('user')) || {Name:'User',avatar:'https://i.pravatar.cc/150?img=68',streak:5}
+  
+
   const dummyData={
     "message": "Analytics retrieved successfully",
     "result": {
@@ -648,7 +652,7 @@ const Dashboard = () => {
       <Sidebar selectedNav={'Dashboard'} />
 
       <div className='min-h-screen w-full bg-gradient-to-br from-gray-900 to-blue-900 text-white p-8'>
-        <Header name={data.name} avatar={data.avatar} streak={data.streak} />
+        <Header name={user.result?user.result.Name:'user'} avatar={data.avatar} streak={data.streak} />
         <TimeRangeSelector timeRange={timeRange} setTimeRange={setTimeRange} />
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6'>
           <MetricCard
