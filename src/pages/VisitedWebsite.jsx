@@ -1,13 +1,13 @@
-import React, { useEffect ,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react';
 import { Sidebar } from '../components/shared';
 import { useSelector } from 'react-redux';
-
+import { totalTimeofApps } from '../utils/AnalyticsData';
 const websiteData = [
   { name: 'Tue', productivity: 74, time: 160 },
-  { name: 'Wed', productivity: 56, time:105 },
+  { name: 'Wed', productivity: 56, time: 105 },
   { name: 'Thu', productivity: 57, time: 185 },
   { name: 'Fri', productivity: 74, time: 160 },
 ];
@@ -20,22 +20,19 @@ const topWebsites = [
   { name: 'chat.openai.com', time: 120, category: 'AI', change: 15 },
 ];
 
-
 const convertCategoryData = (categoryData) => {
   const maxValue = Math.max(...Object.values(categoryData));
 
   return Object.entries(categoryData)
-    .filter(([category, value]) => value !== 0 && value !== null) 
+    .filter(([category, value]) => value !== 0 && value !== null)
     .map(([category, value]) => ({
       category,
-      value: (value / maxValue) * 2.4
+      value: (value / maxValue) * 2.4,
     }));
 };
 
-
-
 const formatTime = (minutes) => {
-  const hours = Math.floor(minutes / (60*60));
+  const hours = Math.floor(minutes / (60 * 60));
   const mins = minutes % 60;
   return `${hours}h ${mins}m`;
 };
@@ -50,12 +47,9 @@ function getTopVisitedDomains(visitedDomains) {
     .map(([name, { seconds }]) => ({
       name,
       time: seconds,
-      change: Math.floor(Math.random() * 10) - 5
+      change: Math.floor(Math.random() * 10) - 5,
     }));
 }
-
-
-
 
 const VisitedWebsites = () => {
   const userData = useSelector((state) => state.user.userData);
@@ -75,11 +69,9 @@ const VisitedWebsites = () => {
           <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8'>
             <MetricCard
               title='Total Websites'
-              
-              value={(Object.keys(userData.result?.visitedDomains || {}).length || 0)+''}
+              value={(Object.keys(userData.result?.visitedDomains || {}).length || 0) + ''}
               icon='🌐'
               color='text-blue-400'
-             
             />
             <MetricCard
               title='Total Time'
@@ -169,43 +161,63 @@ const WebsiteChart = ({ data }) => (
   </motion.div>
 );
 
-const TopWebsites = ({ websites }) => (
-  <motion.div
-    className='bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-lg'
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-  >
-    <h2 className='text-2xl font-semibold mb-4'>Top Visited Websites</h2>
-    <div className='space-y-4'>
-      {websites.map((website, index) => (
-        <motion.div
-          key={index}
-          className='flex items-center justify-between'
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: index * 0.1 }}
-        >
-          <div>
-            <div className='font-medium'>{website.name}</div>
-            <div className='text-sm text-gray-400'>{website.category}</div>
-          </div>
-          <div className='text-right'>
-            <div>{formatTime(website.time)}</div>
-            <div className={website.change >= 0 ? 'text-green-400' : 'text-red-400'}>
-              {website.change >= 0 ? (
-                <ArrowUpIcon className='inline w-4 h-4' />
-              ) : (
-                <ArrowDownIcon className='inline w-4 h-4' />
-              )}
-              {Math.abs(website.change)}%
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  </motion.div>
-);
+const TopWebsites = ({ websites }) => {
+  const totalTime = websites.reduce((sum, website) => sum + website.time, 0);
+
+  return (
+    <motion.div
+      className='bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-lg'
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h2 className='text-2xl font-semibold mb-4'>Top Visited Websites</h2>
+      <div className='space-y-4'>
+        {websites.map((website, index) => {
+          const percentage = (website.time / totalTime) * 100;
+
+          return (
+            <motion.div
+              key={index}
+              className='space-y-1'
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <div className='flex justify-between items-center'>
+                <div>
+                  <div className='font-medium'>{website.name}</div>
+                  <div className='text-sm text-gray-400'>{website.category}</div>
+                </div>
+                <div className='text-right'>
+                  <div>{formatTime(website.time)}</div>
+                  <div
+                    className={`${
+                      website.change >= 0 ? 'text-green-400' : 'text-red-400'
+                    } flex items-center`}
+                  >
+                    {website.change >= 0 ? (
+                      <ArrowUpIcon className='inline w-4 h-4' />
+                    ) : (
+                      <ArrowDownIcon className='inline w-4 h-4' />
+                    )}
+                    {Math.abs(website.change)}%
+                  </div>
+                </div>
+              </div>
+              <div className='h-2 bg-gray-700 rounded-full'>
+                <div
+                  className='h-2 bg-blue-500 rounded-full'
+                  style={{ width: `${percentage}%` }}
+                ></div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </motion.div>
+  );
+};
 
 const WebsiteCategories = () => {
   const [categories, setCategories] = useState([
@@ -219,7 +231,7 @@ const WebsiteCategories = () => {
     { name: 'Health and Fitness', percentage: 0, color: 'bg-teal-500' },
     { name: 'Personal Development', percentage: 0, color: 'bg-orange-500' },
     { name: 'Others', percentage: 0, color: 'bg-gray-500' },
-    { name: 'Finance', percentage: 0, color: 'bg-brown-500' }
+    { name: 'Finance', percentage: 0, color: 'bg-brown-500' },
   ]);
 
   const userData = useSelector((state) => state.user.userData);
@@ -232,13 +244,15 @@ const WebsiteCategories = () => {
       return acc;
     }, {});
 
-    const updatedCategories = categories.map((category) => {
-      if (percentages[category.name]) {
-        return { ...category, percentage: percentages[category.name] };
-      } else {
-        return { ...category, percentage: 0 };
-      }
-    }).filter((category) => category.percentage > 0 && category.percentage >= 1);
+    const updatedCategories = categories
+      .map((category) => {
+        if (percentages[category.name]) {
+          return { ...category, percentage: percentages[category.name] };
+        } else {
+          return { ...category, percentage: 0 };
+        }
+      })
+      .filter((category) => category.percentage > 0 && category.percentage >= 1);
     setCategories(updatedCategories);
   };
 
@@ -266,21 +280,19 @@ const WebsiteCategories = () => {
           >
             <div className='w-24 text-sm'>{category.name}</div>
             <div className='flex-1'>
-              <div className='h-4 bg-gray-700 rounded-full'>
+              <div className='h-2 bg-gray-700 rounded-full mx-5'>
                 <div
-                  className={`h-4 rounded-full ${category.color}`}
+                  className={`h-2 rounded-full ${category.color}`}
                   style={{ width: `${category.percentage}%` }}
                 ></div>
               </div>
             </div>
-            <div className='w-12 text-right text-sm'>{category.percentage.toFixed(2)}%</div>
+            <div className='w-10 text-right text-md'>{category.percentage.toFixed(2)}%</div>
           </motion.div>
         ))}
       </div>
     </motion.div>
   );
 };
-
-
 
 export default VisitedWebsites;

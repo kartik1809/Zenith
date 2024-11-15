@@ -6,10 +6,9 @@ import { ZenithBadge } from './ZenithBadge';
 
 export const ProductivityBoosters = ({ zenithInsights, setSelectedInsight }) => {
   const toggleInsight = (id) => {
-    // Implement the toggle logic here
     setSelectedInsight((insights) =>
       insights.map((insight) =>
-        insight.id == id ? { ...insight, completed: insight.completed } : insight
+        insight.id === id ? { ...insight, completed: !insight.completed } : insight
       )
     );
   };

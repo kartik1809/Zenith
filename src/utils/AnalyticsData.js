@@ -1,17 +1,5 @@
 import { format, subDays, startOfWeek, addDays } from 'date-fns';
-import {
-  Target,
-  CheckCircle,
-  Calendar,
-  Award,
-  Trophy,
-  Clock,
-  Coffee,
-  Compass,
-  BookOpen,
-  Bolt,
-} from 'lucide-react';
-
+import { Target, Calendar, Clock, Compass, BookOpen, Video, Headphones } from 'lucide-react';
 export const COLORS = ['#007AFF', '#34C759', '#FF9500', '#FF2D55', '#AF52DE', '#5856D6'];
 
 export const generateFakeData = (days) => {
@@ -286,3 +274,46 @@ export const ProfileAnalyticsData = {
     'Collaborate more with team members on challenging projects',
   ],
 };
+
+export const contentRecommendations = [
+  {
+    id: 1,
+    title: 'The Science of Productivity',
+    type: 'Video',
+    duration: '15 min',
+    category: 'Productivity',
+    icon: Video,
+  },
+  {
+    id: 2,
+    title: 'Mindfulness for Stress Reduction',
+    type: 'Audio',
+    duration: '20 min',
+    category: 'Mental Wellbeing',
+    icon: Headphones,
+  },
+  {
+    id: 3,
+    title: 'Goal Setting Mastery Book',
+    type: 'Article',
+    duration: '10 min read',
+    category: 'Personal Growth',
+    icon: BookOpen,
+  },
+  {
+    id: 4,
+    title: 'Effective Time Management Strategies',
+    type: 'Video',
+    duration: '18 min',
+    category: 'Productivity',
+    icon: Video,
+  },
+  {
+    id: 5,
+    title: 'Building Resilience in Challenging Times',
+    type: 'Audio',
+    duration: '25 min',
+    category: 'Mental Wellbeing',
+    icon: Headphones,
+  },
+];

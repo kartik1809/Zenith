@@ -12,19 +12,18 @@ import {
   DailyProTip,
   GrowthJourney,
   InsightModal,
+  ContentRecommendations,
 } from '../components/Recommendation';
-
+import { contentRecommendations } from '../utils/AnalyticsData';
 import { useZenithData } from '../components/hooks/useZenithData';
 import { useSelector } from 'react-redux';
 
-
-
 const Recommendation = () => {
-  const [viewMode, setViewMode] = useState('week');
+  const [viewMode, setViewMode] = useState('day');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedInsight, setSelectedInsight] = useState(null);
   const { zenithData, zenithInsights, zenScore, dailyInsight, growthProgress } = useZenithData();
-
+  console.log(contentRecommendations);
   const navigateDate = (direction) => {
     setCurrentDate((prevDate) => {
       if (viewMode === 'day') {
@@ -41,10 +40,10 @@ const Recommendation = () => {
     const today = new Date();
 
     return dayWiseScores
-      .filter(day => day.focusScore !== null)
+      .filter((day) => day.focusScore !== null)
       .map((day, index) => {
         const date = new Date(today);
-        date.setDate(today.getDate() - (3-index));
+        date.setDate(today.getDate() - (3 - index));
 
         const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
@@ -53,7 +52,7 @@ const Recommendation = () => {
           productivity: Math.round(day.productivityScore),
           focus: Math.round(day.focusScore),
           contentConsumption: Math.round(day.contentScore),
-          mood: Math.round(day.moodScore)
+          mood: Math.round(day.moodScore),
         };
       });
   };
@@ -84,27 +83,25 @@ const Recommendation = () => {
 
   function getHighestScore1(overallScores) {
     const scores = Object.values(overallScores);
-    const maxScore = Math.max(...scores.filter(score => score < 100));
+    const maxScore = Math.max(...scores.filter((score) => score < 100));
     return Math.round(maxScore);
   }
-  
-  
+
   function getHighestScore(scores) {
     const { totalScore, ...restScores } = scores;
-    const filteredScores = Object.keys(restScores).filter(key => restScores[key] < 100);
-  
+    const filteredScores = Object.keys(restScores).filter((key) => restScores[key] < 100);
+
     if (filteredScores.length === 0) return null;
-    
+
     const highestKey = filteredScores.reduce((maxKey, key) => {
       return restScores[key] > restScores[maxKey] ? key : maxKey;
     }, filteredScores[0]);
-    
+
     return {
       score: restScores[highestKey],
-      key: highestKey
+      key: highestKey,
     };
   }
-
 
   return (
     <div className='flex min-h-screen'>
@@ -155,7 +152,9 @@ const Recommendation = () => {
             Week View
           </button>
         </motion.div>
-
+        <div className='mb-8'>
+          <DailyProTip dailyInsight={dailyInsight} className />
+        </div>
         {renderDateNavigation()}
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8'>
@@ -165,9 +164,8 @@ const Recommendation = () => {
             zenithInsights={zenithInsights}
             setSelectedInsight={setSelectedInsight}
           />
+          <ContentRecommendations recommendations={contentRecommendations} />
           <FocusFlow zenithData={zenithData} />
-          <ZenithFocusTimer /> 
-          <DailyProTip dailyInsight={dailyInsight} />
           <GrowthJourney growthProgress={growthProgress} />
         </div>
 
