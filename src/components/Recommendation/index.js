@@ -7,3 +7,4 @@ export { DailyProTip } from './DailyProTip';
 export { GrowthJourney } from './GrowthJourney';
 export { InsightModal } from './InsightModal';
 export { ContentRecommendations } from './ContentRecommendations';
+export { VideoRecommendations } from './VideoRecommendations';

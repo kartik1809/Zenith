@@ -4,9 +4,9 @@ import { Lightbulb, ChevronRight, CheckCircleIcon } from 'lucide-react';
 import { ZenithCard } from './ZenithCard';
 import { ZenithBadge } from './ZenithBadge';
 
-export const ProductivityBoosters = ({ zenithInsights, setSelectedInsight }) => {
+export const ProductivityBoosters = ({ zenithInsights, setZenithInsights }) => {
   const toggleInsight = (id) => {
-    setSelectedInsight((insights) =>
+    setZenithInsights((insights) =>
       insights.map((insight) =>
         insight.id === id ? { ...insight, completed: !insight.completed } : insight
       )

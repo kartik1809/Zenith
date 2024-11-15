@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { generateZenithData, generateZenithInsights } from '../../utils/AnalyticsData';
+
 export const useZenithData = () => {
   const [zenithData, setZenithData] = useState([]);
   const [zenithInsights, setZenithInsights] = useState([]);
@@ -10,12 +11,12 @@ export const useZenithData = () => {
   useEffect(() => {
     setZenithData(generateZenithData());
     setZenithInsights(generateZenithInsights());
-    setZenScore(82); // score between 70-90
-    setGrowthProgress(74); // Progress between 60-90%
+    setZenScore(82);
+    setGrowthProgress(73);
     setDailyInsight(
       'Great job on maintaining focus yesterday! Your productivity increased by 15%. Keep up the momentum by tackling your most challenging task first thing in the morning.'
     );
   }, []);
 
-  return { zenithData, zenithInsights, zenScore, dailyInsight, growthProgress };
+  return { zenithData, zenithInsights, setZenithInsights, zenScore, dailyInsight, growthProgress };
 };

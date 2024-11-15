@@ -219,9 +219,9 @@ export const ProfileAnalyticsData = {
     role: 'Software Developer',
     email: 'kartik.pokhriyal@zenith.com',
     location: 'New Delhi, India',
-    joinDate: 'October 2023',
+    joinDate: 'October 2024',
     team: 'Zenith Innovators',
-    skills: ['Full Stack', 'AI Enthusiast'],
+    skills: ['Full Stack Developer', 'AI Enthusiast'],
   },
   userComparison: {
     productivityScore: 68,
@@ -315,5 +315,42 @@ export const contentRecommendations = [
     duration: '25 min',
     category: 'Mental Wellbeing',
     icon: Headphones,
+  },
+];
+export const videoRecommendations = [
+  {
+    id: 1,
+    title: 'How to use GeeksForGeeks for practicing Coding',
+    type: 'Video',
+    category: 'Motivation',
+    url: 'https://www.youtube.com/embed/07QCAJYolaE',
+  },
+  {
+    id: 2,
+    title: 'How to use GeeksForGeeks for practicing Coding',
+    type: 'Video',
+    category: 'Well-being',
+    url: 'https://www.youtube.com/embed/07QCAJYolaE',
+  },
+  {
+    id: 3,
+    title: 'How to use GeeksForGeeks for practicing Coding',
+    type: 'Video',
+    category: 'Personal Growth',
+    url: 'https://www.youtube.com/embed/07QCAJYolaE',
+  },
+  {
+    id: 4,
+    title: 'How to use GeeksForGeeks for practicing Coding',
+    type: 'Video',
+    category: 'Life Skills',
+    url: 'https://www.youtube.com/embed/07QCAJYolaE',
+  },
+  {
+    id: 5,
+    title: 'How to use GeeksForGeeks for practicing Coding',
+    type: 'Video',
+    category: 'Motivation',
+    url: 'https://www.youtube.com/embed/07QCAJYolaE',
   },
 ];
