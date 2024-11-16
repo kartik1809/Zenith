@@ -624,7 +624,7 @@ const Dashboard = () => {
       .filter(([category, value]) => value !== 0 && value !== null)
       .map(([category, value]) => ({
         category,
-        value: (value / maxValue) * 2.4,
+        value: (value / maxValue)*100,
       }));
   };
   const CustomPolarAngleAxisTick = (props) => {
@@ -672,7 +672,7 @@ const Dashboard = () => {
             avatar={data.avatar}
             streak={data.streak}
           />
-          <TimeRangeSelector timeRange={timeRange} setTimeRange={setTimeRange} />
+          {/* <TimeRangeSelector timeRange={timeRange} setTimeRange={setTimeRange} /> */}
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6'>
             <MetricCard
               title='Focus Score'
