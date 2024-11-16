@@ -653,7 +653,7 @@ const Dashboard = () => {
       .map(([name, { seconds }]) => ({
         name,
         time: seconds,
-        change: Math.floor(Math.random() * 10) - 5,
+        
       }));
   }
 

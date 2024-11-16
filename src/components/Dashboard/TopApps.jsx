@@ -24,9 +24,9 @@ const TopApps = ({ apps = [], timeRange }) => (
                 <span className='font-medium text-gray-300'>{app.name}</span>
                 <span className='text-sm text-gray-400'>
                   {formatTimeinHrsMin(app.time)}
-                  <span className={app.change >= 0 ? 'text-green-400 ml-2' : 'text-red-400 ml-2'}>
+                  {/* <span className={app.change >= 0 ? 'text-green-400 ml-2' : 'text-red-400 ml-2'}>
                     {app.change >= 0 ? '↑' : '↓'} {Math.abs(app.change)}%
-                  </span>
+                  </span> */}
                 </span>
               </div>
               <div className='bg-gray-700 h-2 rounded-full'>
