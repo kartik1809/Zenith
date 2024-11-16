@@ -16,7 +16,7 @@ const UserGoal = ({ nextPage, setUserData, userData }) => {
 
     const sendDataToServer = async (userData) => {
         try {
-            const response = await fetch('ttps://resolute-land-440916-q3.el.r.appspot.com/auth/signup', {
+            const response = await fetch('https://resolute-land-440916-q3.el.r.appspot.com/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
