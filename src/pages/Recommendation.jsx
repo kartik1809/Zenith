@@ -72,6 +72,7 @@ const Recommendation = () => {
           <ProductivityBoosters
             zenithInsights={zenithInsights}
             setZenithInsights={setZenithInsights}
+            setSelectedInsight={setSelectedInsight}
           />
           <ContentRecommendations recommendations={contentRecommendations} />
           <FocusFlow zenithData={transformData(userData.result?.dayWiseScores || [])} />
