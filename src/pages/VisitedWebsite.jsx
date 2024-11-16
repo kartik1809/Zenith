@@ -47,7 +47,7 @@ function getTopVisitedDomains(visitedDomains) {
     .map(([name, { seconds }]) => ({
       name,
       time: seconds,
-      change: Math.floor(Math.random() * 10) - 5,
+      
     }));
 }
 
@@ -191,7 +191,7 @@ const TopWebsites = ({ websites }) => {
                 </div>
                 <div className='text-right'>
                   <div>{formatTime(website.time)}</div>
-                  <div
+                  {/* <div
                     className={`${
                       website.change >= 0 ? 'text-green-400' : 'text-red-400'
                     } flex items-center`}
@@ -202,7 +202,7 @@ const TopWebsites = ({ websites }) => {
                       <ArrowDownIcon className='inline w-4 h-4' />
                     )}
                     {Math.abs(website.change)}%
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className='h-2 bg-gray-700 rounded-full'>
